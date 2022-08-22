@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RealEstateApp.AppShell"
+             Shell.TabBarIsVisible="False"
+             xmlns:views="clr-namespace:RealEstateApp">
+    
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+        
+        <ShellContent Title="Properties" 
+                      Icon="home.png" 
+                      ContentTemplate="{DataTemplate views:PropertyListPage}"/>
+        
+        <ShellContent Title="About" 
+                      Icon="home.png" 
+                      ContentTemplate="{DataTemplate views:AboutPage}"/>
+    </FlyoutItem>
+</Shell>

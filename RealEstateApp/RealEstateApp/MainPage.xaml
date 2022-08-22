@@ -8,9 +8,6 @@
              mc:Ignorable="d"
              Title="MasterDetail">
 
-    <MasterDetailPage.Master>
-        <local:MenuPage x:Name="menuPage" />
-    </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
         <NavigationPage>
             <x:Arguments>

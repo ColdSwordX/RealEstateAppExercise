@@ -9,10 +9,9 @@ using Xamarin.Forms.Xaml;
 
 namespace RealEstateApp
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MenuPage : ContentPage
+    public partial class AppShell : Shell
     {
-        public MenuPage()
+        public AppShell()
         {
             InitializeComponent();
         }
