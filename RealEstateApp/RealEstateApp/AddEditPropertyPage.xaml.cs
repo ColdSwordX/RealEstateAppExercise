@@ -64,7 +64,7 @@ namespace RealEstateApp
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-
+            Vibration.Cancel();
         }
 
         public string StatusMessage { get; set; }
@@ -135,7 +135,11 @@ namespace RealEstateApp
 
                     Property.Longitude = location.Longitude;
 
-                    Property.Address = Geocoding.GetPlacemarksAsync(location).Result.FirstOrDefault().ToString();
+                    Location location1 = new Location(Property.Latitude.Value, Property.Longitude.Value);
+
+                    var address = (await Geocoding.GetPlacemarksAsync(location1))
+                        .FirstOrDefault();
+                    Property.Address = $"{address.Thoroughfare} {address.SubThoroughfare}, {address.PostalCode}, {address.CountryName}";
                 }
             }
             catch (FeatureNotSupportedException fnsEx)
@@ -161,6 +165,7 @@ namespace RealEstateApp
             if (string.IsNullOrWhiteSpace(_address))
             {
                 await DisplayAlert("ALERT", "Address Must be filled out, with something like this: address 123, 4700, Denmark", "OK");
+                RunVibration();
             }
             else
             {
@@ -174,6 +179,10 @@ namespace RealEstateApp
                 Property.Longitude = _location.Longitude;
 
             }
+        }
+        private void RunVibration()
+        {
+            Vibration.Vibrate(TimeSpan.FromSeconds(5));
         }
     }
 }

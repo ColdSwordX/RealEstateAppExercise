@@ -55,6 +55,7 @@
                                 WidthRequest="100"
                                 VerticalOptions="Center"
                                 Clicked="SetAddressFromLocation_Clicked"/>
+                        
                         <Button FontFamily="FA-solid"
                                 x:Name="Geocoding_ToAddress"
                                 Text="{Static fa:IconFont.Home}" 
