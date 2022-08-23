@@ -113,10 +113,8 @@ namespace RealEstateApp
                 if (location != null)
                 {
                     Property.Latitude = location.Latitude;
-                    Latitude.Text = Property.Latitude.ToString();
 
                     Property.Longitude = location.Longitude;
-                    Longitude.Text = Property.Longitude.ToString();
                 }
             }
             catch (FeatureNotSupportedException fnsEx)

@@ -12,6 +12,7 @@ namespace RealEstateApp.Models
         }
 
         private Property _property;
+        private double _distanceToMe;
 
         public Property Property
         {
@@ -23,6 +24,15 @@ namespace RealEstateApp.Models
             }
         }
 
+        public double DistanceToMe
+        {
+            get => _distanceToMe;
+            set
+            {
+                _distanceToMe = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

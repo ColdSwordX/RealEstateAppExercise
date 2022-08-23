@@ -1,7 +1,10 @@
 ﻿using RealEstateApp.Models;
 using RealEstateApp.Services;
+using System;
 using System.Linq;
+using System.Threading;
 using TinyIoC;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

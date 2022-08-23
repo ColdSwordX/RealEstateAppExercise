@@ -48,7 +48,8 @@
                                VerticalTextAlignment="Center"
                                Text="{Binding Property.Longitude}"/>
 
-                        <Button Text="{Static fa:IconFont.Thumbtack}" 
+                        <Button FontFamily="FA-solid"
+                                Text="{Static fa:IconFont.Thumbtack}" 
                                 WidthRequest="100"
                                 VerticalOptions="Center"
                                 Clicked="SetGeolocation_Clicked"/>
