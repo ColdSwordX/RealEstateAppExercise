@@ -33,7 +33,27 @@
                         </Label.FormattedText>
                     </Label>
                     <Entry FontSize="Medium" Text="{Binding Property.Address}" />
+                    
+                    <Label FontSize="Medium" FontFamily="FA-solid" Text="Location"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Label FontSize="Medium"
+                               WidthRequest="100"
+                               x:Name="Latitude"
+                               VerticalTextAlignment="Center"
+                               Text="{Binding Property.Latitude}"/>
+                        
+                        <Label FontSize="Medium"
+                               x:Name="Longitude"
+                               WidthRequest="100"
+                               VerticalTextAlignment="Center"
+                               Text="{Binding Property.Longitude}"/>
 
+                        <Button Text="{Static fa:IconFont.Thumbtack}" 
+                                WidthRequest="100"
+                                VerticalOptions="Center"
+                                Clicked="SetGeolocation_Clicked"/>
+                    </StackLayout>
+                    
                     <Label FontSize="Medium" FontFamily="FA-solid">
                         <Label.FormattedText>
                             <FormattedString>

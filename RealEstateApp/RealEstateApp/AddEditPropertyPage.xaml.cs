@@ -1,8 +1,10 @@
 ﻿using RealEstateApp.Models;
 using RealEstateApp.Services;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using TinyIoC;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -100,6 +102,39 @@ namespace RealEstateApp
         private async void CancelSave_Clicked(object sender, System.EventArgs e)
         {
             await Navigation.PopToRootAsync();
+        }
+
+        private async void SetGeolocation_Clicked(object sender, System.EventArgs e)
+        {
+            try
+            {
+                var location = await Geolocation.GetLocationAsync();
+
+                if (location != null)
+                {
+                    Property.Latitude = location.Latitude;
+                    Latitude.Text = Property.Latitude.ToString();
+
+                    Property.Longitude = location.Longitude;
+                    Longitude.Text = Property.Longitude.ToString();
+                }
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                // Handle not supported on device exception
+            }
+            catch (FeatureNotEnabledException fneEx)
+            {
+                // Handle not enabled on device exception
+            }
+            catch (PermissionException pEx)
+            {
+                // Handle permission exception
+            }
+            catch (Exception ex)
+            {
+                // Unable to get location
+            }
         }
     }
 }
