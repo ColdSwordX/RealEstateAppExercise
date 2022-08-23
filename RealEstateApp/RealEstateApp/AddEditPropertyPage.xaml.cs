@@ -19,6 +19,7 @@ namespace RealEstateApp
         public ObservableCollection<Agent> Agents { get; }
 
         private Property _property;
+        private Agent _selectedAgent;
         public Property Property
         {
             get => _property;
@@ -32,9 +33,6 @@ namespace RealEstateApp
 
             }
         }
-
-        private Agent _selectedAgent;
-
         public Agent SelectedAgent
         {
             get => _selectedAgent;
@@ -46,6 +44,27 @@ namespace RealEstateApp
                     Property.AgentId = _selectedAgent?.Id;
                 }
             }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet
+                && Connectivity.ConnectionProfiles.Contains(ConnectionProfile.WiFi))
+            {
+                Geocoding_FromAddress.IsVisible = true;
+                Geocoding_ToAddress.IsVisible = true;
+            }
+            else
+            {
+                Geocoding_FromAddress.IsVisible = false;
+                Geocoding_ToAddress.IsVisible = false;
+            }
+        }
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
         }
 
         public string StatusMessage { get; set; }

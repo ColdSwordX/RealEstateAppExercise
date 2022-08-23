@@ -40,21 +40,23 @@
                     <Label FontSize="Medium" FontFamily="FA-solid" Text="Location"/>
                     <StackLayout Orientation="Horizontal">
                         <Label FontSize="Medium"
-                               WidthRequest="100"
+                               WidthRequest="75"
                                VerticalTextAlignment="Center"
                                Text="{Binding Property.Latitude, StringFormat='{0:#.##}'}"/>
-                        
+
                         <Label FontSize="Medium"
-                               WidthRequest="100"
+                               WidthRequest="75"
                                VerticalTextAlignment="Center"
                                Text="{Binding Property.Longitude, StringFormat='{0:#.##}'}"/>
 
                         <Button FontFamily="FA-solid"
+                                x:Name="Geocoding_FromAddress"
                                 Text="{Static fa:IconFont.Thumbtack}" 
                                 WidthRequest="100"
                                 VerticalOptions="Center"
                                 Clicked="SetAddressFromLocation_Clicked"/>
                         <Button FontFamily="FA-solid"
+                                x:Name="Geocoding_ToAddress"
                                 Text="{Static fa:IconFont.Home}" 
                                 WidthRequest="100"
                                 VerticalOptions="Center"
