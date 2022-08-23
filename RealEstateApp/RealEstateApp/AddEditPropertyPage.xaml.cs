@@ -29,10 +29,10 @@ namespace RealEstateApp
                 {
                     SelectedAgent = Agents.FirstOrDefault(x => x.Id == _property?.AgentId);
                 }
-               
+
             }
         }
-    
+
         private Agent _selectedAgent;
 
         public Agent SelectedAgent
@@ -44,7 +44,7 @@ namespace RealEstateApp
                 {
                     _selectedAgent = value;
                     Property.AgentId = _selectedAgent?.Id;
-                }                 
+                }
             }
         }
 
@@ -70,7 +70,7 @@ namespace RealEstateApp
                 Title = "Edit Property";
                 Property = property;
             }
-         
+
             BindingContext = this;
         }
 
@@ -85,7 +85,7 @@ namespace RealEstateApp
             {
                 Repository.SaveProperty(Property);
                 await Navigation.PopToRootAsync();
-            }   
+            }
         }
 
         public bool IsValid()
@@ -104,7 +104,7 @@ namespace RealEstateApp
             await Navigation.PopToRootAsync();
         }
 
-        private async void SetGeolocation_Clicked(object sender, System.EventArgs e)
+        private async void SetAddressFromLocation_Clicked(object sender, System.EventArgs e)
         {
             try
             {
@@ -115,6 +115,8 @@ namespace RealEstateApp
                     Property.Latitude = location.Latitude;
 
                     Property.Longitude = location.Longitude;
+
+                    Property.Address = Geocoding.GetPlacemarksAsync(location).Result.FirstOrDefault().ToString();
                 }
             }
             catch (FeatureNotSupportedException fnsEx)
@@ -132,6 +134,26 @@ namespace RealEstateApp
             catch (Exception ex)
             {
                 // Unable to get location
+            }
+        }
+        private async void SetLocationFromAddress(object sender, System.EventArgs e)
+        {
+            string _address = Address.Text;
+            if (string.IsNullOrWhiteSpace(_address))
+            {
+                await DisplayAlert("ALERT", "Address Must be filled out, with something like this: address 123, 4700, Denmark", "OK");
+            }
+            else
+            {
+                Property.Address = _address;
+
+                var _Locations = await Geocoding.GetLocationsAsync(_address);
+
+                Location _location = _Locations?.FirstOrDefault();
+
+                Property.Latitude = _location.Latitude;
+                Property.Longitude = _location.Longitude;
+
             }
         }
     }
