@@ -7,13 +7,13 @@
              mc:Ignorable="d"
              x:Class="RealEstateApp.PropertyDetailPage"
              Title="{Binding Property.Address}">
-    
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Clicked="EditProperty_Clicked"  Text="Edit" />
     </ContentPage.ToolbarItems>
 
     <ScrollView VerticalOptions="FillAndExpand">
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
               Padding="15">
             <Image
                 Grid.Row="0"
@@ -112,6 +112,21 @@
                         Text="{Binding Agent.Phone}" />
                 </Grid>
             </Grid>
+            <StackLayout Orientation="Horizontal" Grid.Row="9">
+                <Button Text="{Static fa:IconFont.Stop }"
+                        FontFamily="FA-solid" 
+                        WidthRequest="100"
+                        Clicked="EndTextToSpeech_Clicked"
+                        x:Name="StartTextToSpeech"
+                        IsVisible="false" />
+                
+                <Button Text="{Static fa:IconFont.Play}"
+                        FontFamily="FA-solid" 
+                        WidthRequest="100"
+                        Clicked="TextToSpeech_Clicked" 
+                        x:Name="EndTextToSpeech"
+                        IsVisible="true"/>
+            </StackLayout>
         </Grid>
     </ScrollView>
 </ContentPage>

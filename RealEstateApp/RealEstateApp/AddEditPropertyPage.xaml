@@ -64,6 +64,24 @@
                                 Clicked="SetLocationFromAddress"/>
                     </StackLayout>
                     
+                    <StackLayout Orientation="Horizontal">
+                        <Label FontSize="Medium" FontFamily="FA-solid" Text="{Static fa:IconFont.Compass}" />
+                        <Label FontSize="Medium" FontFamily="FA-solid" Text="Aspect" />
+                    </StackLayout>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Entry VerticalOptions="End"
+                               FontFamily="FA-solid"
+                               Text="{Binding Property.Aspect}"
+                               Grid.Column="0"/>
+
+                        <Button Clicked="OpenCompass_clicked" 
+                                FontFamily="FA-solid"
+                                VerticalOptions="End"
+                                WidthRequest="100"
+                                Grid.Column="1"
+                                Text="{Static fa:IconFont.DraftingCompass} "/>
+                    </Grid>
+                    
                     <Label FontSize="Medium" FontFamily="FA-solid">
                         <Label.FormattedText>
                             <FormattedString>
@@ -167,6 +185,7 @@
                         ItemDisplayBinding="{Binding Name}"
                         ItemsSource="{Binding Agents}"
                         SelectedItem="{Binding SelectedAgent}" />
+                   
                 </StackLayout>
             </ScrollView>
         </StackLayout>

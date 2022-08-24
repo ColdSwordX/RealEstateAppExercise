@@ -25,13 +25,31 @@ namespace RealEstateApp
             BindingContext = this;
         }
 
+        CancellationTokenSource cts;
         public Agent Agent { get; set; }
 
         public Property Property { get; set; }
 
-        private async void EditProperty_Clicked(object sender, System.EventArgs e)
+        private async void EditProperty_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new AddEditPropertyPage(Property));
+        }
+        private async void TextToSpeech_Clicked(object sender, EventArgs e)
+        {
+            StartTextToSpeech.IsVisible = false;
+            EndTextToSpeech.IsVisible = true;
+            cts = new CancellationTokenSource();
+            await TextToSpeech.SpeakAsync(Property.Description, cts.Token);
+        }
+
+        private void EndTextToSpeech_Clicked(object sender, EventArgs e)
+        {
+            if (cts?.IsCancellationRequested ?? true)
+                return;
+
+            cts.Cancel();
+            StartTextToSpeech.IsVisible = true;
+            EndTextToSpeech.IsVisible = false;
         }
     }
 }

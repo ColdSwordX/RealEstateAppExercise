@@ -3,6 +3,7 @@ using RealEstateApp.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using TinyIoC;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -17,7 +18,6 @@ namespace RealEstateApp
 
         #region PROPERTIES
         public ObservableCollection<Agent> Agents { get; }
-
         private Property _property;
         private Agent _selectedAgent;
         public Property Property
@@ -69,6 +69,7 @@ namespace RealEstateApp
 
         public string StatusMessage { get; set; }
 
+
         public Color StatusColor { get; set; } = Color.White;
         #endregion
 
@@ -93,7 +94,7 @@ namespace RealEstateApp
             BindingContext = this;
         }
 
-        private async void SaveProperty_Clicked(object sender, System.EventArgs e)
+        private async void SaveProperty_Clicked(object sender, EventArgs e)
         {
             if (IsValid() == false)
             {
@@ -118,12 +119,12 @@ namespace RealEstateApp
             return true;
         }
 
-        private async void CancelSave_Clicked(object sender, System.EventArgs e)
+        private async void CancelSave_Clicked(object sender, EventArgs e)
         {
             await Navigation.PopToRootAsync();
         }
 
-        private async void SetAddressFromLocation_Clicked(object sender, System.EventArgs e)
+        private async void SetAddressFromLocation_Clicked(object sender, EventArgs e)
         {
             try
             {
@@ -159,7 +160,7 @@ namespace RealEstateApp
                 // Unable to get location
             }
         }
-        private async void SetLocationFromAddress(object sender, System.EventArgs e)
+        private async void SetLocationFromAddress(object sender, EventArgs e)
         {
             string _address = Address.Text;
             if (string.IsNullOrWhiteSpace(_address))
@@ -180,9 +181,15 @@ namespace RealEstateApp
 
             }
         }
-        private void RunVibration()
+        private async void OpenCompass_clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new CompassPAge(Property));
+        }
+
+            private void RunVibration()
         {
             Vibration.Vibrate(TimeSpan.FromSeconds(5));
         }
+
     }
 }
