@@ -21,12 +21,23 @@
                 Aspect="AspectFill"
                 HeightRequest="225"
                 Source="{Binding Property.MainImageUrl}" />
-            <Label
-                Grid.Row="1"
-                FontAttributes="Bold"
-                FontSize="16"
-                LineBreakMode="NoWrap"
-                Text="{Binding Property.Price, StringFormat='{0:C0}'}" />
+            <StackLayout
+                Grid.Row="1">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    LineBreakMode="NoWrap"
+                    Text="{Binding Property.Price, StringFormat='{0:C0}'}" />
+                <StackLayout Orientation="Vertical">
+                    <Button FontFamily="FA-solid" 
+                        Text="{Static fa:IconFont.MapMarkedAlt}"
+                        Clicked="OpenMaps_Clicked"/>
+                    <Button FontFamily="FA-solid" 
+                        Text="{Static fa:IconFont.Directions}"
+                        Clicked="OpenNavigation_Clicked"/>
+                </StackLayout>
+
+            </StackLayout>
             <Label
                 Grid.Row="2"
                 FontSize="16"
