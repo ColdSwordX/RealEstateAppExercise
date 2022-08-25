@@ -126,5 +126,40 @@ namespace RealEstateApp
             };
             await Map.OpenAsync(location, options);
         }
+
+        private async void OpenBrowser_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                var options = new BrowserLaunchOptions
+                {
+                    LaunchMode = BrowserLaunchMode.SystemPreferred,
+                    TitleMode = BrowserTitleMode.Show,
+                    PreferredToolbarColor = Color.Pink,
+                    PreferredControlColor = Color.Red
+                };
+                await Browser.OpenAsync("http://pluralsight.com", options);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Warning", ex.Message, "ok");
+            }
+        }
+
+        private async void OpenFile_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+
+                await Launcher.OpenAsync(new OpenFileRequest
+                {
+                    File = new ReadOnlyFile(Property.ContractFilePath)
+                });
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Warning", ex.Message, "ok");
+            }
+        }
     }
 }

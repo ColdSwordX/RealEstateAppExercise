@@ -1,7 +1,11 @@
 ﻿using RealEstateApp.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace RealEstateApp.Services.Repository
 {
@@ -10,8 +14,10 @@ namespace RealEstateApp.Services.Repository
         private List<Agent> _agents;
         private List<Property> _properties;
 
+        private string _contractFilePath = "contract.pdf";
         public MockRepository()
         {
+            LoadFiles();
             LoadProperties();
             LoadAgents();
         }
@@ -70,7 +76,7 @@ namespace RealEstateApp.Services.Repository
                 Phone = "+61423555712"
             },
             //NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
-            //ContractFilePath = _contractFilePath,
+            ContractFilePath = _contractFilePath,
             Aspect = "North"
         },
         new Property
@@ -89,7 +95,7 @@ namespace RealEstateApp.Services.Repository
                 Phone = "+61290014312"
             },
             //NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
-            //ContractFilePath = _contractFilePath,
+            ContractFilePath = _contractFilePath,
             Aspect = "East"
         },
         new Property
@@ -107,7 +113,7 @@ namespace RealEstateApp.Services.Repository
                 Phone = "0429008145"
             },
             //NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
-            //ContractFilePath = _contractFilePath,
+            ContractFilePath = _contractFilePath,
             Aspect = "South"
         },
         new Property
@@ -126,7 +132,7 @@ namespace RealEstateApp.Services.Repository
                 Phone = "02 8090 6412"
             },
             //NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
-            //ContractFilePath = _contractFilePath,
+            ContractFilePath = _contractFilePath,
             Aspect = "North"
         },
         new Property
@@ -144,7 +150,7 @@ namespace RealEstateApp.Services.Repository
                 Phone = "90541823"
             },
             //NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
-            //ContractFilePath = _contractFilePath,
+            ContractFilePath = _contractFilePath,
             Aspect = "West"
         }
     };
@@ -171,6 +177,17 @@ namespace RealEstateApp.Services.Repository
                     ImageUrl = $"{GlobalSettings.Instance.ImageBaseUrl}agent_1.png"
                 }
             };
+        }
+
+        private async void LoadFiles()
+        {
+            _contractFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "contract.pdf");
+
+            using (var stream = await FileSystem.OpenAppPackageFileAsync("contract.pdf"))
+            {
+                var _file = File.Create(_contractFilePath);
+                stream.CopyTo(_file);
+            }
         }
 
         private List<string> GetPropertyImageUrls(int index)

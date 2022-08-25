@@ -34,5 +34,6 @@ namespace RealEstateApp.Models
         public string Aspect { get; set; }
         public string MainImageUrl => ImageUrls?.FirstOrDefault() ?? GlobalSettings.Instance.NoImageUrl;
         public Vendor Vendor { get; set; }
+        public string ContractFilePath { get; set; }
     }
 }

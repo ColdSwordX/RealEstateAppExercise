@@ -170,17 +170,33 @@
             <StackLayout Orientation="Horizontal" Grid.Row="9">
                 <Button Text="{Static fa:IconFont.Stop }"
                         FontFamily="FA-solid" 
-                        WidthRequest="100"
+                        WidthRequest="50"
                         Clicked="EndTextToSpeech_Clicked"
                         x:Name="StartTextToSpeech"
                         IsVisible="false" />
                 
                 <Button Text="{Static fa:IconFont.Play}"
                         FontFamily="FA-solid" 
-                        WidthRequest="100"
+                        WidthRequest="50"
                         Clicked="TextToSpeech_Clicked" 
                         x:Name="EndTextToSpeech"
                         IsVisible="true"/>
+                
+                <Button Text="{Static fa:IconFont.Link}"
+                        FontFamily="FA-solid"
+                        WidthRequest="50"
+                        Clicked="OpenBrowser_Clicked"/>
+                
+                <Button Text="{Static fa:IconFont.FileSignature}"
+                        FontFamily="FA-solid"
+                        WidthRequest="50"
+                        Clicked="OpenFile_Clicked"/>
+                
+                <Button Text="{Static fa:IconFont.Link}"
+                        FontFamily="FA-solid"
+                        WidthRequest="50"
+                        Clicked="OpenBrowser_Clicked"/>
+                <Button></Button>
             </StackLayout>
         </Grid>
     </ScrollView>
