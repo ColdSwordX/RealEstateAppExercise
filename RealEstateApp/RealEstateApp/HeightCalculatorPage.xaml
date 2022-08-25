@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RealEstateApp.HeightCalculatorPage"
+             xmlns:fa="clr-namespace:FontAwesome">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding CurrentAltitude, StringFormat='Current Altitude {0}m'} "/>
+            <Entry Text="{Binding LabelOfMesserument}" VerticalOptions="FillAndExpand"/>
+            <Button Text="Save" Clicked="SaveMeasurement_Clicked"/>
+            <ListView ItemsSource="{Binding Measurements}"
+                        VerticalOptions="FillAndExpand">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label Text="{Binding BarometerMeasurement.Display}"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Label HorizontalOptions="End"
+                   Text="{Binding CurrentPressure, StringFormat='Current Pressure {0#:##}'}"/>
+        </StackLayout>
+        
+    </ContentPage.Content>
+</ContentPage>

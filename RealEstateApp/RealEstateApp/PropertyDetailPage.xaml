@@ -13,7 +13,7 @@
     </ContentPage.ToolbarItems>
 
     <ScrollView VerticalOptions="FillAndExpand">
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
               Padding="15">
             <Image
                 Grid.Row="0"
@@ -80,8 +80,52 @@
                 Margin="0,0,0,20"
                 FontSize="14"
                 Text="{Binding Property.Description}" />
+            <Grid Grid.Row="7" RowDefinitions="auto,auto,auto,*" ColumnDefinitions="auto,*">
+                <Label Grid.Row="0" 
+                       Grid.ColumnSpan="2"
+                       FontSize="Medium"
+                       Text="Vendor"/>
+                <Label FontFamily="FA-solid"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       Text="{Static fa:IconFont.UserAlt}"/>
+                <Label Grid.Row="1"
+                       Grid.Column="1"
+                       Text="{Binding Property.Vendor.FullName}"/>
+                
+                <Label FontFamily="FA-solid"
+                       Grid.Row="2"
+                       Grid.Column="0"
+                       Text="{Static fa:IconFont.Envelope}"/>
+
+                <Label Grid.Row="2"
+                       Grid.Column="1"
+                       Text="{Binding Property.Vendor.Email}"
+                       TextColor="Blue">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Tapped="Email_Tapped">
+                        </TapGestureRecognizer>
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Label FontFamily="FA-solid"
+                       Grid.Row="3"
+                       Grid.Column="0"
+                       Text="{Static fa:IconFont.Phone}"/>
+                <Label Grid.Row="3"
+                       Grid.Column="1"
+                       Text="{Binding Property.Vendor.Phone}"
+                       TextColor="Blue">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Tapped="Phone_Tapped">
+                        </TapGestureRecognizer>
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
             <Label
-                Grid.Row="7"
+                Grid.Row="8"
                 FontAttributes="Bold"
                 FontSize="14"
                 Text="Listed by:" />

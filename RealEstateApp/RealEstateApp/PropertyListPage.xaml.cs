@@ -9,6 +9,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace RealEstateApp
 {
@@ -84,7 +85,7 @@ namespace RealEstateApp
                 PropertiesCollection.Add(listItem);
             }
         }
-
+        
         private async void ItemsListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             await Navigation.PushAsync(new PropertyDetailPage(e.Item as PropertyListItem));

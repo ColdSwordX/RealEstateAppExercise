@@ -14,5 +14,8 @@
         <ShellContent Title="About" 
                       Icon="home.png" 
                       ContentTemplate="{DataTemplate views:AboutPage}"/>
+
+        <ShellContent Title="Height Calculator"
+                      ContentTemplate="{DataTemplate views:HeightCalculatorPage}"/>
     </FlyoutItem>
 </Shell>
