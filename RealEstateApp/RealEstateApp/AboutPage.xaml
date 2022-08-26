@@ -69,6 +69,8 @@
                     Command="{Binding OpenWebCommand}"
                     Text="Learn more"
                     TextColor="White" />
+                <Button Text="Remove Settings"
+                        Clicked="RemoveSettings_Clicked"/>
             </StackLayout>
         </ScrollView>
     </Grid>

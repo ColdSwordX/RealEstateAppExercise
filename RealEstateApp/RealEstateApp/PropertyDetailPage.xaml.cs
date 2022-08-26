@@ -12,16 +12,20 @@ using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
 using System.IO;
+using System.Globalization;
+using PropertyChanged;
+using System.ComponentModel;
+using Newtonsoft.Json.Linq;
 
 namespace RealEstateApp
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PropertyDetailPage : ContentPage
+    public partial class PropertyDetailPage : ContentPage, INotifyPropertyChanged
     {
         public PropertyDetailPage(PropertyListItem propertyListItem)
         {
             InitializeComponent();
-
+            GetSettings();
             Property = propertyListItem.Property;
 
             IRepository Repository = TinyIoCContainer.Current.Resolve<IRepository>();
@@ -34,32 +38,110 @@ namespace RealEstateApp
                 // handle the tap
             };
         }
-
+        private float _volume;
+        private float _pitch;
+        public float volume
+        {
+            get => _volume;
+            set
+            {
+                _volume = value;
+                RaisePropertyChanged();
+            }
+        }
+        public float pitch
+        {
+            get => _pitch;
+            set
+            {
+                _pitch = value;
+                RaisePropertyChanged();
+            }
+        }
+        public bool showPlayButton = true;
+        public bool showStopButton = false;
         CancellationTokenSource cts;
+        public event PropertyChangedEventHandler PropertyChanged;
         public Agent Agent { get; set; }
 
         public Property Property { get; set; }
 
+        private async void GetSettings()
+        {
+            try
+            {
+                var volumeSetting = await SecureStorage.GetAsync("Volume_Setting");
+                volume = float.Parse(volumeSetting, CultureInfo.InvariantCulture.NumberFormat);
+            }
+            catch (Exception)
+            {
+                volume = 0;
+            }
+            try
+            {
+                var pitchSettings = await SecureStorage.GetAsync("Pitch_Setting"); 
+                pitch = float.Parse(pitchSettings, CultureInfo.InvariantCulture.NumberFormat);
+            }
+            catch (Exception)
+            {
+                pitch = 0;
+            }
+        }
+        public async void SaveSettings()
+        {
+            try
+            {
+                await SecureStorage.SetAsync("Volume_Setting", $"{volume}");
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("Warning", "No Volume setting have been made", "Ok");
+            }
+            try
+            {
+                await SecureStorage.SetAsync("Pitch_Setting", $"{pitch}");
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("Warning", "No Volume setting have been made", "Ok");
+            }
+        }
         private async void EditProperty_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new AddEditPropertyPage(Property));
         }
         private async void TextToSpeech_Clicked(object sender, EventArgs e)
         {
-            StartTextToSpeech.IsVisible = false;
-            EndTextToSpeech.IsVisible = true;
-            cts = new CancellationTokenSource();
-            await TextToSpeech.SpeakAsync(Property.Description, cts.Token);
+            SaveSettings();
+            showPlayButton = !showPlayButton;
+            showStopButton = !showStopButton;
+             cts = new CancellationTokenSource();
+            var settings = new SpeechOptions
+            {
+                Volume = volume,
+                Pitch = volume,
+            };
+        
+            await TextToSpeech.SpeakAsync(Property.Description,settings, cts.Token);
+            showPlayButton = !showPlayButton;
+            showStopButton = !showStopButton;
+
         }
 
+
+        public void RaisePropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         private void EndTextToSpeech_Clicked(object sender, EventArgs e)
         {
             if (cts?.IsCancellationRequested ?? true)
                 return;
 
             cts.Cancel();
-            StartTextToSpeech.IsVisible = true;
-            EndTextToSpeech.IsVisible = false;
+
+            showPlayButton = !showPlayButton;
+            showStopButton = !showStopButton;
         }
 
         private async void Email_Tapped(object sender, EventArgs e)

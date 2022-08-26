@@ -173,15 +173,27 @@
                         WidthRequest="50"
                         Clicked="EndTextToSpeech_Clicked"
                         x:Name="StartTextToSpeech"
-                        IsVisible="false" />
+                        IsVisible="{Binding showStopButton}" />
                 
                 <Button Text="{Static fa:IconFont.Play}"
                         FontFamily="FA-solid" 
                         WidthRequest="50"
                         Clicked="TextToSpeech_Clicked" 
                         x:Name="EndTextToSpeech"
-                        IsVisible="true"/>
-                
+                        IsVisible="{Binding showPlayButton}"/>
+                <StackLayout>
+                    <Slider WidthRequest="200"
+                        Value="{Binding volume}">
+
+                    </Slider>
+                    <Slider WidthRequest="200"
+                        Value="{Binding pitch}">
+
+                    </Slider>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout Grid.Row="10" Orientation="Horizontal">
+
                 <Button Text="{Static fa:IconFont.Link}"
                         FontFamily="FA-solid"
                         WidthRequest="50"
@@ -191,9 +203,7 @@
                         FontFamily="FA-solid"
                         WidthRequest="50"
                         Clicked="OpenFile_Clicked"/>
-            </StackLayout>
-            <StackLayout Grid.Row="10" Orientation="Horizontal">
-
+                
                 <Button Text="{Static fa:IconFont.ShareAlt}"
                         FontFamily="FA-solid"
                         WidthRequest="50"
