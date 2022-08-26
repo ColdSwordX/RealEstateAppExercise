@@ -13,7 +13,7 @@
     </ContentPage.ToolbarItems>
 
     <ScrollView VerticalOptions="FillAndExpand">
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
               Padding="15">
             <Image
                 Grid.Row="0"
@@ -186,17 +186,29 @@
                         FontFamily="FA-solid"
                         WidthRequest="50"
                         Clicked="OpenBrowser_Clicked"/>
-                
+
                 <Button Text="{Static fa:IconFont.FileSignature}"
                         FontFamily="FA-solid"
                         WidthRequest="50"
                         Clicked="OpenFile_Clicked"/>
-                
-                <Button Text="{Static fa:IconFont.Link}"
+            </StackLayout>
+            <StackLayout Grid.Row="10" Orientation="Horizontal">
+
+                <Button Text="{Static fa:IconFont.ShareAlt}"
                         FontFamily="FA-solid"
                         WidthRequest="50"
-                        Clicked="OpenBrowser_Clicked"/>
-                <Button></Button>
+                        Clicked="Share_Clicked"/>
+
+                <Button Text="{Static fa:IconFont.ShareSquare}"
+                        FontFamily="FA-solid"
+                        WidthRequest="50"
+                        Clicked="ShareFile_Clicked"/>
+
+                <Button Text="{Static fa:IconFont.Clipboard}"
+                        FontFamily="FA-solid"
+                        WidthRequest="50"
+                        Clicked="ShareClipbord_Clicked"/>
+                
             </StackLayout>
         </Grid>
     </ScrollView>

@@ -1,4 +1,5 @@
-﻿using RealEstateApp.Models;
+﻿using System.Text.Json;
+using RealEstateApp.Models;
 using RealEstateApp.Services;
 using System;
 using System.Collections.Generic;
@@ -159,6 +160,38 @@ namespace RealEstateApp
             catch (Exception ex)
             {
                 await DisplayAlert("Warning", ex.Message, "ok");
+            }
+        }
+        private async void Share_Clicked(object sender, EventArgs e)
+        {
+            var text = new ShareTextRequest
+            {
+                Title = "hare Property",
+                Uri = $"{Property.NeighbourhoodUrl}",
+                Subject = "A propertyyou may be interested in",
+                Text = $"Address: {Property.Address} - Price: {Property.Price} - Beds: {Property.Beds}"
+            };
+            await Share.RequestAsync(text);
+        }
+        private async void ShareFile_Clicked(object sender, EventArgs e)
+        {
+            var file = new ShareFileRequest
+            {
+                Title = "Share Property Contract",
+                File = new ShareFile(Property.ContractFilePath)
+            };
+            await Share.RequestAsync(file);
+        }
+        private async void ShareClipbord_Clicked(object sender, EventArgs e)
+        {
+            string json = JsonSerializer.Serialize(Property);
+            if (Clipboard.HasText)
+            {
+                var text = await Clipboard.GetTextAsync();
+            }
+            else
+            {
+                await Clipboard.SetTextAsync(json);
             }
         }
     }
