@@ -186,7 +186,7 @@ namespace RealEstateApp.Services.Repository
             using (var stream = await FileSystem.OpenAppPackageFileAsync("contract.pdf"))
             {
                 var _file = File.Create(_contractFilePath);
-                stream.CopyTo(_file);
+                await stream.CopyToAsync(_file);
             }
         }
 

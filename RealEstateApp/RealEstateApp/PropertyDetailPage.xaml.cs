@@ -11,6 +11,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
+using System.IO;
 
 namespace RealEstateApp
 {
@@ -69,14 +70,17 @@ namespace RealEstateApp
                 {
                     Subject = "Feedback",
                     Body = "Thanks for the excellent service!",
-                    To = new List<string> { "jensneergaard@hotmail.com" }
+                    To = new List<string> {Property.Vendor.Email}
                 };
+
+                var folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                var attachmentFilePath = Path.Combine(folder, "property.txt");
+                File.WriteAllText(attachmentFilePath, $"{Property.Address}");
 
                 await Email.ComposeAsync(message);
             }
             catch (Exception ex)
             {
-
                 await DisplayAlert("Warning",ex.Message,"ok");
             }
         }
@@ -87,24 +91,24 @@ namespace RealEstateApp
             try
             {
                 chooser = await DisplayActionSheet(Property.Vendor.Phone, "Cancel", null,buttons);
+                switch (chooser)
+                {
+                    case "Call":
+                        PhoneDialer.Open(Property.Vendor.Phone);
+                        break;
+                    case "SmS":
+                        var message = new SmsMessage
+                        {
+                            Recipients = new List<string> {Property.Vendor.Phone},
+                            Body = "Hello!"
+                        };
+                        await Sms.ComposeAsync(message);
+                        break;
+                }
             }
             catch (Exception)
             {
                 await DisplayAlert("Warning", "No Phone Dialer", "OK");
-            }
-            switch (chooser)
-            {
-                case "Call":
-                    PhoneDialer.Open("22392361");
-                    break;
-                case "SmS":
-                    var message = new SmsMessage
-                    {
-                        Recipients = new List<string> { "22392361" },
-                        Body = "Hello!"
-                    };
-                    await Sms.ComposeAsync(message);
-                    break;
             }
         }
 
@@ -151,7 +155,6 @@ namespace RealEstateApp
         {
             try
             {
-
                 await Launcher.OpenAsync(new OpenFileRequest
                 {
                     File = new ReadOnlyFile(Property.ContractFilePath)
@@ -184,14 +187,15 @@ namespace RealEstateApp
         }
         private async void ShareClipbord_Clicked(object sender, EventArgs e)
         {
-            string json = JsonSerializer.Serialize(Property);
-            if (Clipboard.HasText)
+            try
             {
-                var text = await Clipboard.GetTextAsync();
-            }
-            else
-            {
+                string json = JsonSerializer.Serialize(Property);
                 await Clipboard.SetTextAsync(json);
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }
